@@ -13,7 +13,7 @@ const services = [
     title: "Podcast Production",
     description:
       "Professional podcast production that brings your voice and vision to life with clarity.",
-    image: "/images/services-podcast.jpg",
+    image: "/images/service2.jpg",
     href: "/services/podcast-production",
   },
 ];

@@ -4,7 +4,7 @@ const videos = [
   "/videos/bite-1.mp4",
   "/videos/bite-2.mp4",
   "/videos/bite-3.mp4",
-  "/videos/bite-4.mp4",
+  "/videos/bite-5.mp4",
 ];
 
 export default function VideosSection() {
