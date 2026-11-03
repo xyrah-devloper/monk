@@ -73,12 +73,12 @@ export async function POST(req: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Registration error:", error);
     return NextResponse.json(
       {
         success: false,
-        message: error?.message || "Registration failed. Please try again.",
+        message: error instanceof Error ? error.message : "Registration failed. Please try again.",
       },
       { status: 500 }
     );

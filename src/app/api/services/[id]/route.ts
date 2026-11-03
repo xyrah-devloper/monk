@@ -62,10 +62,10 @@ export async function PUT(
       message: "Service updated successfully",
       data: updatedService,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("PUT /api/services/[id] error:", error);
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to update service" },
+      { success: false, message: error instanceof Error ? error.message : "Failed to update service" },
       { status: 500 }
     );
   }

@@ -33,10 +33,10 @@ export async function POST(req: Request) {
       { success: true, message: "Service created successfully", data: service },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("POST /api/services error:", error);
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to create service" },
+      { success: false, message: error instanceof Error ? error.message : "Failed to create service" },
       { status: 500 }
     );
   }

@@ -73,12 +73,12 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Login error:", error);
     return NextResponse.json(
       {
         success: false,
-        message: error?.message || "Login failed. Please try again.",
+        message: error instanceof Error ? error.message : "Login failed. Please try again.",
       },
       { status: 500 }
     );

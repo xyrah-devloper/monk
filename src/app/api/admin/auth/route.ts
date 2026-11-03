@@ -39,10 +39,10 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Admin auth error:", error);
     return NextResponse.json(
-      { success: false, message: error?.message || "Authentication failed" },
+      { success: false, message: error instanceof Error ? error.message : "Authentication failed" },
       { status: 500 }
     );
   }

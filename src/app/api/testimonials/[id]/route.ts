@@ -54,10 +54,10 @@ export async function PUT(
       message: "Testimonial updated successfully",
       data: updatedTestimonial,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("PUT /api/testimonials/[id] error:", error);
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to update testimonial" },
+      { success: false, message: error instanceof Error ? error.message : "Failed to update testimonial" },
       { status: 500 }
     );
   }

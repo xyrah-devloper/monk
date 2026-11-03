@@ -62,10 +62,10 @@ export async function PUT(
       message: "Portfolio item updated successfully",
       data: updatedItem,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("PUT /api/portfolio/[id] error:", error);
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to update portfolio item" },
+      { success: false, message: error instanceof Error ? error.message : "Failed to update portfolio item" },
       { status: 500 }
     );
   }

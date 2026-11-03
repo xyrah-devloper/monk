@@ -49,12 +49,12 @@ export async function DELETE(
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Newsletter DELETE error:", error);
     return NextResponse.json(
       {
         success: false,
-        message: error?.message || "Failed to delete subscriber",
+        message: error instanceof Error ? error.message : "Failed to delete subscriber",
       },
       { status: 500 }
     );

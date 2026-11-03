@@ -66,8 +66,11 @@ function LoginScreen({ onLogin }: { onLogin: (key: string) => void }) {
       } else {
         setError(data.message || "Invalid password.");
       }
-    } catch (err: any) {
-      setError("Connection failed: " + (err?.message || "Please try again."));
+    } catch (err: unknown) {
+      setError(
+        "Connection failed: " +
+          (err instanceof Error ? err.message : "Please try again.")
+      );
     } finally {
       setIsLoading(false);
     }
@@ -269,8 +272,34 @@ function Dashboard({
   }, [adminKey]);
 
   useEffect(() => {
-    fetchContacts();
-  }, [fetchContacts]);
+    let cancelled = false;
+    const load = async () => {
+      try {
+        const res = await fetch("/api/contact", {
+          headers: { "x-admin-key": adminKey },
+        });
+        const data = await res.json();
+        if (cancelled) return;
+        if (data.success) {
+          setContacts(data.data || []);
+        } else {
+          setContactsError("Failed to load contact inquiries.");
+        }
+      } catch {
+        if (!cancelled) {
+          setContactsError("Connection failed. Please try again.");
+        }
+      } finally {
+        if (!cancelled) {
+          setIsContactsLoading(false);
+        }
+      }
+    };
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [adminKey]);
 
   // ─── Newsletter Subscribers ───────────────────────────────────────────────
   const fetchSubscribers = useCallback(async () => {
@@ -294,11 +323,12 @@ function Dashboard({
   }, [adminKey]);
 
   // Fetch newsletter data when tab is selected
-  useEffect(() => {
-    if (activeTab === "newsletter" && subscribers.length === 0 && !isNewsletterLoading) {
+  const handleNewsletterTab = () => {
+    setActiveTab("newsletter");
+    if (subscribers.length === 0 && !isNewsletterLoading) {
       fetchSubscribers();
     }
-  }, [activeTab]);
+  };
 
   // ─── Delete Subscriber ────────────────────────────────────────────────────
   const handleDeleteConfirm = async () => {
@@ -533,7 +563,7 @@ function Dashboard({
                 Contact Inquiries
               </button>
               <button
-                onClick={() => setActiveTab("newsletter")}
+                onClick={handleNewsletterTab}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all text-slate-500 hover:text-slate-700 hover:bg-white/60"
               >
                 <Users className="w-3.5 h-3.5" />
@@ -749,17 +779,11 @@ function Dashboard({
 
 // ─── Main Admin Page ───────────────────────────────────────────────────────────
 export default function AdminPage() {
-  const [adminKey, setAdminKey] = useState<string | null>(null);
-
-  useEffect(() => {
-    const savedKey =
-      typeof window !== "undefined"
-        ? sessionStorage.getItem("monk_admin_key")
-        : null;
-    if (savedKey) {
-      setAdminKey(savedKey);
-    }
-  }, []);
+  const [adminKey, setAdminKey] = useState<string | null>(() =>
+    typeof window !== "undefined"
+      ? sessionStorage.getItem("monk_admin_key")
+      : null
+  );
 
   const handleLogin = (key: string) => {
     if (typeof window !== "undefined") {

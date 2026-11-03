@@ -33,10 +33,10 @@ export async function POST(req: Request) {
       { success: true, message: "Podcast created successfully", data: podcast },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("POST /api/podcasts error:", error);
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to create podcast" },
+      { success: false, message: error instanceof Error ? error.message : "Failed to create podcast" },
       { status: 500 }
     );
   }

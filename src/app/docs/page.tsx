@@ -187,7 +187,7 @@ export default function DocsPage() {
                     The homepage <strong>Reserve Your Spot</strong> form takes
                     name, contact number, email, and notes. The green WhatsApp
                     button (bottom-right of every page) opens a chat to the
-                    studio's number directly — no form needed.
+                    studio&apos;s number directly — no form needed.
                   </p>
                 </Step>
               </div>
@@ -215,7 +215,7 @@ export default function DocsPage() {
                   <p>
                     Enter the admin password provided to you and press
                     <strong> Enter</strong>. (For security, the password is not
-                    written in this guide — ask the site owner if you don't
+                    written in this guide — ask the site owner if you don&apos;t
                     have it.)
                   </p>
                 </Step>
@@ -240,7 +240,7 @@ export default function DocsPage() {
               <div className="mt-8 bg-[#f4f4f6] border border-gray-200 rounded-xl p-5">
                 <p className="text-sm text-[#56585e] leading-relaxed">
                   <strong className="text-[#0d141a]">Tip:</strong> Every enquiry
-                  also reaches the studio's CRM automatically, so leads appear
+                  also reaches the studio&apos;s CRM automatically, so leads appear
                   in both places — the website admin panel and the CRM.
                 </p>
               </div>

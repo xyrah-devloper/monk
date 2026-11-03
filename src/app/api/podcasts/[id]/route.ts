@@ -54,10 +54,10 @@ export async function PUT(
       message: "Podcast updated successfully",
       data: updatedPodcast,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("PUT /api/podcasts/[id] error:", error);
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to update podcast" },
+      { success: false, message: error instanceof Error ? error.message : "Failed to update podcast" },
       { status: 500 }
     );
   }

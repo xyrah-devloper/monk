@@ -98,7 +98,7 @@ export default function ServicesPage() {
               className="shadow-sm"
             >
               <Image
-                src="/images/gopinath.jpg?v=2"
+                src="/images/gopinath.jpg"
                 alt="Monk Podcast Studio production session with Digitek lighting setup"
                 fill
                 className="object-cover"

@@ -33,10 +33,10 @@ export async function POST(req: Request) {
       { success: true, message: "Portfolio item created successfully", data: item },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("POST /api/portfolio error:", error);
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to create portfolio item" },
+      { success: false, message: error instanceof Error ? error.message : "Failed to create portfolio item" },
       { status: 500 }
     );
   }

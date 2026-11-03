@@ -44,8 +44,8 @@ export default function LoginPage() {
       setTimeout(() => {
         router.push("/");
       }, 1000);
-    } catch (err: any) {
-      setError(err.message || "Invalid credentials. Please try again.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Invalid credentials. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -133,7 +133,7 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-6 text-center text-sm text-gray-400">
-            Don't have an account yet?{" "}
+            Don&apos;t have an account yet?{" "}
             <Link href="/register" className="font-medium text-amber-500 hover:text-amber-400">
               Register here
             </Link>

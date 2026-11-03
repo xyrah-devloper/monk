@@ -33,10 +33,10 @@ export async function POST(req: Request) {
       { success: true, message: "Testimonial created successfully", data: testimonial },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("POST /api/testimonials error:", error);
     return NextResponse.json(
-      { success: false, message: error.message || "Failed to create testimonial" },
+      { success: false, message: error instanceof Error ? error.message : "Failed to create testimonial" },
       { status: 500 }
     );
   }
